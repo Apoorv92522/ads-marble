@@ -167,17 +167,20 @@ nav.sc{background:rgba(13,11,8,.95);backdrop-filter:blur(20px);padding:14px 60px
 .ph{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:20px}
 .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
 .pc{position:relative;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
-.pc.ft{grid-column:span 2;aspect-ratio:unset;min-height:300px}
+.pc.ft{grid-column:span 2;aspect-ratio:unset;min-height:300px;height:460px}
+/* Product card image — dynamic fill */
+.pc .it-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block;z-index:1;transition:transform .5s ease}
+.pc:hover .it-img{transform:scale(1.06)}
 .pc:hover .po{opacity:1;transform:translateY(0)}
 .pc:hover .pi{opacity:0}
-.po{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,11,8,.97) 0%,rgba(13,11,8,.3) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px 24px;opacity:0;transform:translateY(8px);transition:all .42s ease;z-index:2}
-.ptag{position:absolute;top:16px;right:16px;background:var(--g);color:var(--d);font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;z-index:3}
+.po{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,11,8,.97) 0%,rgba(13,11,8,.3) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px 24px;opacity:0;transform:translateY(8px);transition:all .42s ease;z-index:4}
+.ptag{position:absolute;top:16px;right:16px;background:var(--g);color:var(--d);font-size:.57rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;z-index:5}
 .pcat{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:6px}
 .pnm{font-family:'Cinzel',serif;font-size:1.05rem;color:#fff;margin-bottom:12px;line-height:1.3}
 .plnk{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--g2);text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:gap .3s}
 .plnk:hover{gap:13px}
-/* product icons */
-.pi{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .35s;z-index:1}
+/* product icons — z-index:2 so they show over marble bg but under overlay */
+.pi{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .35s;z-index:2}
 .pi-lbl{font-family:'Cinzel',serif;font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-align:center;line-height:1.45}
 .p-cta{text-align:center;margin-top:44px}
 .p-cta p{font-size:.82rem;color:var(--mu);margin-bottom:18px;font-weight:300}
@@ -204,22 +207,33 @@ nav.sc{background:rgba(13,11,8,.95);backdrop-filter:blur(20px);padding:14px 60px
 .ig-tile{position:relative;overflow:hidden;aspect-ratio:1;text-decoration:none;display:flex;align-items:center;justify-content:center}
 .ig-tile:hover .it-ov{opacity:1}
 .ig-tile:hover .it-ph{opacity:0}
-.it-ov{position:absolute;inset:0;background:rgba(13,11,8,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;transition:opacity .35s;z-index:3}
+.ig-tile:hover .it-img{transform:scale(1.06)}
+
+/* Real image — always fills tile perfectly regardless of source dimensions */
+.it-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+  z-index:1;
+  transition:transform .5s ease;
+  /* Dynamically adjusts to any image aspect ratio */
+}
+
+/* Overlay & caption sit above image */
+.it-ov{position:absolute;inset:0;background:rgba(13,11,8,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;transition:opacity .35s;z-index:6}
 .it-ov svg{width:26px;height:26px;fill:#fff}
 .it-ov span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;font-weight:500}
-/* real photo fills tile */
-.it-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:4;transition:transform .5s ease}
-.ig-tile:hover .it-img{transform:scale(1.06)}
-/* placeholder shown when no image is present */
-.it-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .35s;z-index:2}
-/* overlay and caption sit above image */
-.it-ov{z-index:6!important}
-.it-cap{z-index:5!important}
-.it-lbl{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;text-align:center;line-height:1.4}
-/* caption bar at bottom of each tile */
-.it-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,11,8,.88),transparent);padding:14px 14px 12px;z-index:2;opacity:0;transition:opacity .35s}
+
+/* Caption bar */
+.it-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,11,8,.88),transparent);padding:14px 14px 12px;z-index:5;opacity:0;transition:opacity .35s}
 .ig-tile:hover .it-cap{opacity:1}
 .it-cap-txt{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g3)}
+
+/* Placeholder (shows when no image yet) */
+.it-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .35s;z-index:2}
+.it-lbl{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;text-align:center;line-height:1.4}
 .ig-cta{text-align:center}
 .ig-btn{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;font-size:.73rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:16px 36px;text-decoration:none;transition:opacity .3s,transform .2s}
 .ig-btn:hover{opacity:.88;transform:translateY(-2px)}
@@ -552,6 +566,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
         </svg>
         <div class="pi-lbl" style="color:rgba(200,168,75,.8)">Designer Marble Temple</div>
       </div>
+      <img class="it-img" src="images/ig1.jpg" alt="Designer Marble Temple" loading="lazy">
       <div class="po">
         <div class="pcat">Marble Temple</div>
         <div class="pnm">Designer Marble Temple</div>
@@ -561,6 +576,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 2. Decorative Home Temple -->
     <div class="pc mx-w rv d1">
+      <img class="it-img" src="images/ig2.jpg" alt="Decorative Home Temple" loading="lazy">
       <div class="pi">
         <svg width="68" height="88" viewBox="0 0 68 88" fill="#7a6040" opacity=".6">
           <rect x="21" y="74" width="26" height="14"/><rect x="14" y="58" width="40" height="18"/>
@@ -579,6 +595,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 3. Lakshmi -->
     <div class="pc mx-b rv">
+      <img class="it-img" src="images/ig3.jpg" alt="Goddess Lakshmi Marble Statue" loading="lazy">
       <div class="ptag">Popular</div>
       <div class="pi">
         <svg width="62" height="82" viewBox="0 0 62 82" fill="#7a6040" opacity=".55">
@@ -595,12 +612,13 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
       <div class="po">
         <div class="pcat">Marble Statue</div>
         <div class="pnm">Goddess Lakshmi Marble Statue</div>
-        <a href="#contact"></script>" class="plnk">Enquire Now →</a>
+        <a href="#contact" class="plnk">Enquire Now →</a>
       </div>
     </div>
 
     <!-- 4. Ganesha -->
     <div class="pc mx-w rv d1">
+      <img class="it-img" src="images/ig4.jpg" alt="Ganesha Marble Statue" loading="lazy">
       <div class="pi">
         <svg width="66" height="78" viewBox="0 0 66 78" fill="#7a6040" opacity=".55">
           <ellipse cx="33" cy="25" rx="20" ry="22"/>
@@ -623,6 +641,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 5. Shiva -->
     <div class="pc mx-bk rv d2">
+      <img class="it-img" src="images/ig5.jpg" alt="Shiva Marble Statue" loading="lazy">
       <div class="pi">
         <svg width="62" height="82" viewBox="0 0 62 82" fill="#c8a84b" opacity=".55">
           <ellipse cx="31" cy="15" rx="13" ry="14"/>
@@ -645,6 +664,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 6. White Temple -->
     <div class="pc mx-g rv">
+      <img class="it-img" src="images/ig1.jpg" alt="White Marble Temple" loading="lazy">
       <div class="ptag">New</div>
       <div class="pi">
         <svg width="72" height="90" viewBox="0 0 72 90" fill="#6a6060" opacity=".6">
@@ -665,6 +685,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 7. Durga -->
     <div class="pc mx-b rv d1">
+      <img class="it-img" src="images/ig2.jpg" alt="Goddess Durga Marble Statue" loading="lazy">
       <div class="pi">
         <svg width="68" height="84" viewBox="0 0 68 84" fill="#7a6040" opacity=".55">
           <ellipse cx="34" cy="18" rx="15" ry="17"/>
@@ -687,6 +708,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 8. Elephant Craft -->
     <div class="pc mx-br rv d2">
+      <img class="it-img" src="images/ig3.jpg" alt="Marble Elephant Craft" loading="lazy">
       <div class="pi">
         <svg width="82" height="68" viewBox="0 0 82 68" fill="#c8a84b" opacity=".55">
           <ellipse cx="44" cy="36" rx="28" ry="20"/>
@@ -708,6 +730,7 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
 
     <!-- 9. Inlay Art -->
     <div class="pc mx-w rv d3">
+      <img class="it-img" src="images/ig4.jpg" alt="Marble Inlay Artwork" loading="lazy">
       <div class="pi">
         <svg width="74" height="74" viewBox="0 0 74 74" opacity=".5">
           <rect x="6" y="6" width="62" height="62" rx="4" stroke="#7a6040" stroke-width="2" fill="none"/>
@@ -744,80 +767,42 @@ footer{background:var(--d2);border-top:1px solid rgba(200,168,75,.1);padding:60p
     </div>
   </div>
 
-
-
-  <!--
-  ═══════════════════════════════════════════════════════════════════
-  HOW TO ADD YOUR INSTAGRAM PHOTOS
-  ═══════════════════════════════════════════════════════════════════
-  1. Open your Instagram app → go to each post → tap ⋯ → "Copy Link"
-  2. Open that link in a browser on desktop, right-click the photo → "Save Image As"
-  3. Save each file into an "images/" folder next to this index.html
-     Name them: ig1.jpg, ig2.jpg, ig3.jpg, ig4.jpg, ig5.jpg, ig6.jpg
-  4. Also update the href="..." on each tile to point to that exact post URL
-  ═══════════════════════════════════════════════════════════════════
-  -->
   <div class="ig-grid rv">
 
-    <!-- TILE 1 -->
     <a class="ig-tile mx-d" href="https://www.instagram.com/adsmarbles/" target="_blank">
       <img class="it-img" src="images/ig1.jpg" alt="Marble Temple – ADS Marbles" loading="lazy">
       <div class="it-cap"><div class="it-cap-txt">Marble Temple</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
-    <!-- TILE 2 -->
     <a class="ig-tile mx-w" href="https://www.instagram.com/adsmarbles/" target="_blank">
-      <div class="it-ph">
-        <svg width="52" height="66" viewBox="0 0 52 66" fill="#7a6040" opacity=".5"><ellipse cx="26" cy="16" rx="13" ry="15"/><rect x="15" y="28" width="22" height="30" rx="6"/><ellipse cx="26" cy="62" rx="17" ry="6" opacity=".6"/><line x1="12" y1="38" x2="4" y2="52" stroke="#7a6040" stroke-width="5" stroke-linecap="round"/><line x1="40" y1="38" x2="48" y2="52" stroke="#7a6040" stroke-width="5" stroke-linecap="round"/></svg>
-        <div class="it-lbl" style="color:#7a6040">Add photo:<br>images/ig2.jpg</div>
-      </div>
-      <!-- <img class="it-img" src="images/ig2.jpg" alt="Marble Statue – ADS Marbles" loading="lazy"> -->
+      <img class="it-img" src="images/ig2.jpg" alt="Marble Statue – ADS Marbles" loading="lazy">
       <div class="it-cap"><div class="it-cap-txt">Marble Statue</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
-    <!-- TILE 3 -->
     <a class="ig-tile mx-br" href="https://www.instagram.com/adsmarbles/" target="_blank">
-      <div class="it-ph">
-        <svg width="58" height="58" viewBox="0 0 58 58" opacity=".6"><circle cx="29" cy="29" r="22" stroke="#c8a84b" stroke-width="1.5" fill="none"/><polygon points="29,10 34,24 49,24 37,32 41,46 29,38 17,46 21,32 9,24 24,24" fill="none" stroke="#c8a84b" stroke-width="1.5"/><circle cx="29" cy="29" r="5" fill="#c8a84b"/></svg>
-        <div class="it-lbl" style="color:rgba(200,168,75,.7)">Add photo:<br>images/ig3.jpg</div>
-      </div>
-      <!-- <img class="it-img" src="images/ig3.jpg" alt="Inlay Artwork – ADS Marbles" loading="lazy"> -->
+      <img class="it-img" src="images/ig3.jpg" alt="Inlay Artwork – ADS Marbles" loading="lazy">
       <div class="it-cap"><div class="it-cap-txt">Inlay Artwork</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
-    <!-- TILE 4 -->
     <a class="ig-tile mx-bk" href="https://www.instagram.com/adsmarbles/" target="_blank">
-      <div class="it-ph">
-        <svg width="60" height="75" viewBox="0 0 60 75" fill="#c8a84b" opacity=".6"><rect x="18" y="62" width="24" height="13"/><rect x="10" y="48" width="40" height="16"/><rect x="4" y="34" width="52" height="16"/><polygon points="30,4 4,24 56,24"/><rect x="24" y="24" width="12" height="44"/></svg>
-        <div class="it-lbl" style="color:rgba(200,168,75,.75)">Add photo:<br>images/ig4.jpg</div>
-      </div>
-      <!-- <img class="it-img" src="images/ig4.jpg" alt="Grand Temple – ADS Marbles" loading="lazy"> -->
+      <img class="it-img" src="images/ig4.jpg" alt="Grand Temple – ADS Marbles" loading="lazy">
       <div class="it-cap"><div class="it-cap-txt">Grand Temple</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
-    <!-- TILE 5 -->
     <a class="ig-tile mx-b" href="https://www.instagram.com/adsmarbles/" target="_blank">
-      <div class="it-ph">
-        <svg width="66" height="58" viewBox="0 0 66 58" fill="#7a6040" opacity=".5"><ellipse cx="38" cy="32" rx="24" ry="18"/><ellipse cx="28" cy="16" rx="12" ry="14"/><ellipse cx="12" cy="16" rx="6" ry="9"/><path d="M22 27 Q10 37 8 52" stroke="#7a6040" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="16" y="44" width="7" height="14" rx="3.5"/><rect x="28" y="46" width="7" height="12" rx="3.5"/><rect x="42" y="46" width="7" height="12" rx="3.5"/><rect x="55" y="44" width="7" height="14" rx="3.5"/></svg>
-        <div class="it-lbl" style="color:#7a6040">Add photo:<br>images/ig5.jpg</div>
-      </div>
-      <!-- <img class="it-img" src="images/ig5.jpg" alt="Elephant Craft – ADS Marbles" loading="lazy"> -->
+      <img class="it-img" src="images/ig5.jpg" alt="Elephant Craft – ADS Marbles" loading="lazy">
       <div class="it-cap"><div class="it-cap-txt">Elephant Craft</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
-    <!-- TILE 6 -->
     <a class="ig-tile mx-g" href="https://www.instagram.com/adsmarbles/" target="_blank">
-      <div class="it-ph">
-        <svg width="66" height="82" viewBox="0 0 66 82" fill="#5a5050" opacity=".55"><ellipse cx="33" cy="18" rx="20" ry="22"/><path d="M20 23 Q8 9 12 3 Q18 -2 26 8" stroke="#5a5050" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M46 23 Q58 9 54 3 Q48 -2 40 8" stroke="#5a5050" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="33" cy="60" rx="17" ry="18"/><ellipse cx="33" cy="76" rx="22" ry="6" opacity=".4"/><path d="M21 34 Q16 46 18 54" stroke="#5a5050" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="27" cy="20" r="4" fill="#888"/><circle cx="40" cy="20" r="4" fill="#888"/></svg>
-        <div class="it-lbl" style="color:#5a5050">Add photo:<br>images/ig6.jpg</div>
-      </div>
       <!-- <img class="it-img" src="images/ig6.jpg" alt="Ganesha Statue – ADS Marbles" loading="lazy"> -->
-      <div class="it-cap"><div class="it-cap-txt">Ganesha Statue</div></div>
+      <div class="it-ph" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2"><div style="font-family:Cinzel,serif;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:#5a5050;text-align:center">Add<br>images/ig6.jpg</div></div>
+      <div class="it-cap"><div class="it-cap-txt">Coming Soon</div></div>
       <div class="it-ov"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg><span>View on Instagram</span></div>
     </a>
 
